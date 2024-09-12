@@ -21,13 +21,13 @@ export const registerFormControls = [
     componentType: "input",
     type: "password",
   },
-  {
-    name: "confirmPassword",
-    label: "Confirm Password",
-    placeholder: "Confirm Password",
-    componentType: "input",
-    type: "password",
-  },
+  // {
+  //   name: "confirmPassword",
+  //   label: "Confirm Password",
+  //   placeholder: "Confirm Password",
+  //   componentType: "input",
+  //   type: "password",
+  // },
 ];
 
 export const loginFormControls = [

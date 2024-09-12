@@ -25,7 +25,7 @@ const CommonForm = ({
             id={controlItem.name}
             type={controlItem.type}
             value={value}
-            className={`border-gray-300 rounded ${index % 2 === 0 ? "bg-blue-100" : "bg-white"}`}
+            className={`border-gray-300 rounded ${index % 2 === 0 ? "bg-blue-50" : "bg-white"}`}
             onChange={(e) => {
               setFormData({ ...formData, [controlItem.name]: e.target.value });
             }}

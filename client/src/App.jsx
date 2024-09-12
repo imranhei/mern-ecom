@@ -15,6 +15,7 @@ import ShoppingCheckout from "./pages/shopping-view/checkout";
 import ShoppingAccount from "./pages/shopping-view/account";
 import CheckAuth from "./components/common/check-auth";
 import UnauthPage from "./pages/unauth-page";
+import PDF from "./pages/pdf";
 
 function App() {
   const isAuthenticated = false;
@@ -67,6 +68,7 @@ function App() {
         </Route>
         <Route path="/unauth-page" element={<UnauthPage />} />
         <Route path="*" element={<NotFound />} />
+        <Route path="/pdf" element={<PDF />} />
       </Routes>
     </div>
   );
