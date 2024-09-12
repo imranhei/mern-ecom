@@ -7,7 +7,7 @@ import AdminDashboard from "./pages/admin-view/dashboard";
 import AdminProducts from "./pages/admin-view/products";
 import AdminOrders from "./pages/admin-view/orders";
 import AdminFeatures from "./pages/admin-view/features";
-import ShoppingLayout from "./components/shopping view/layout";
+import ShoppingLayout from "./components/shopping-view/layout";
 import NotFound from "./pages/not-found";
 import ShoppingHome from "./pages/shopping-view/home";
 import Shoppinglisting from "./pages/shopping-view/listing";
@@ -15,12 +15,17 @@ import ShoppingCheckout from "./pages/shopping-view/checkout";
 import ShoppingAccount from "./pages/shopping-view/account";
 import CheckAuth from "./components/common/check-auth";
 import UnauthPage from "./pages/unauth-page";
-import PDF from "./pages/pdf";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { checkAuth } from "./store/auth-slice";
 
 function App() {
-  const isAuthenticated = false;
-  const user = null;
-  // const location = useLocation();
+  const { user, isAuthenticated } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(checkAuth());
+  }, [dispatch]);
 
   return (
     <div className="flex flex-col overflow-hidden bg-white">
@@ -68,7 +73,6 @@ function App() {
         </Route>
         <Route path="/unauth-page" element={<UnauthPage />} />
         <Route path="*" element={<NotFound />} />
-        <Route path="/pdf" element={<PDF />} />
       </Routes>
     </div>
   );

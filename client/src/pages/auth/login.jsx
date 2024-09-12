@@ -2,6 +2,9 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import CommonForm from "../../components/common/form";
 import { loginFormControls } from "@/config";
+import { useDispatch } from "react-redux";
+import { loginUser } from "@/store/auth-slice";
+import { useToast } from "../../hooks/use-toast"
 
 const initialState = {
   userName: "",
@@ -9,12 +12,28 @@ const initialState = {
   password: "",
 };
 
-const onSubmit = () => {
-
-}
-
 const AuthLogin = () => {
   const [formData, setFormData] = useState(initialState);
+  const dispatch = useDispatch();
+  const {toast} = useToast();
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+
+    dispatch(loginUser(formData)).then((data) => {
+      if (data?.payload?.success) {
+        toast({
+          title: data?.payload?.message || "Login success",
+        });
+      } else {
+        toast({
+          variant: "destructive",
+          title: data?.payload?.message || "Login failed",
+        });
+      }
+    });
+  };
+
   return (
     <div className="mx-auto w-full max-w-md space-y-6">
       <div className="text-center">
@@ -31,9 +50,9 @@ const AuthLogin = () => {
           </Link>
         </p>
       </div>
-      <CommonForm 
+      <CommonForm
         formControls={loginFormControls}
-        buttonText={'Sign In'}
+        buttonText={"Sign In"}
         formData={formData}
         setFormData={setFormData}
         onSubmit={onSubmit}
