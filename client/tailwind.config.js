@@ -8,12 +8,12 @@ module.exports = {
   theme: {
   	extend: {
   		borderRadius: {
-  			lg: 'var(--radius)',
-  			md: 'calc(var(--radius) - 2px)',
-  			sm: 'calc(var(--radius) - 4px)'
+  			lg: '8px',
+  			md: '4px',
+  			sm: '2px'
   		},
   		colors: {
-  			background: 'hsl(var(--background))',
+  			background: 'white',
   			foreground: 'hsl(var(--foreground))',
   			card: {
   				DEFAULT: 'hsl(var(--card))',
@@ -24,8 +24,8 @@ module.exports = {
   				foreground: 'hsl(var(--popover-foreground))'
   			},
   			primary: {
-  				DEFAULT: 'hsl(var(--primary))',
-  				foreground: 'hsl(var(--primary-foreground))'
+  				DEFAULT: 'black',
+  				foreground: 'white'
   			},
   			secondary: {
   				DEFAULT: 'hsl(var(--secondary))',
@@ -33,7 +33,7 @@ module.exports = {
   			},
   			muted: {
   				DEFAULT: 'hsl(var(--muted))',
-  				foreground: 'hsl(var(--muted-foreground))'
+  				foreground: 'gray-400'
   			},
   			accent: {
   				DEFAULT: 'hsl(var(--accent))',
@@ -43,8 +43,8 @@ module.exports = {
   				DEFAULT: 'hsl(var(--destructive))',
   				foreground: 'hsl(var(--destructive-foreground))'
   			},
-  			border: 'hsl(var(--border))',
-  			input: 'hsl(var(--input))',
+  			border: 'border-gray-300',
+  			input: 'border-gray-300',
   			ring: 'hsl(var(--ring))',
   			chart: {
   				'1': 'hsl(var(--chart-1))',

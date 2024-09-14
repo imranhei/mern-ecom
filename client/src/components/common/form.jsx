@@ -1,8 +1,14 @@
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { Select, SelectContent, SelectValue } from "@radix-ui/react-select";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
+import {
+  SelectItem,
+  SelectTrigger,
+  Select,
+  SelectContent,
+  SelectValue,
+} from "../ui/select";
 
 const CommonForm = ({
   formControls,
@@ -25,7 +31,6 @@ const CommonForm = ({
             id={controlItem.name}
             type={controlItem.type}
             value={value}
-            className={`border-gray-300 rounded ${index % 2 === 0 ? "bg-blue-50" : "bg-white"}`}
             onChange={(e) => {
               setFormData({ ...formData, [controlItem.name]: e.target.value });
             }}
@@ -55,13 +60,13 @@ const CommonForm = ({
             value={value}
           >
             <SelectTrigger className="w-full">
-              <SelectValue placeholder={controlItem.placeholder} />
+              <SelectValue placeholder={controlItem.label} />
             </SelectTrigger>
             <SelectContent>
               {controlItem.options && controlItem.options.length > 0
                 ? controlItem.options.map((option) => {
                     return (
-                      <SelectItem key={option.id} value={option.id}>
+                      <SelectItem key={option.id} value={option.id} >
                         {option.label}
                       </SelectItem>
                     );
@@ -101,7 +106,10 @@ const CommonForm = ({
           );
         })}
       </div>
-      <Button type="submit" className="mt-4 w-full bg-gray-900 rounded text-white hover:bg-gray-950">
+      <Button
+        type="submit"
+        className="mt-4 w-full bg-gray-900 rounded text-white hover:bg-gray-950"
+      >
         {buttonText || "Submit"}
       </Button>
     </form>
