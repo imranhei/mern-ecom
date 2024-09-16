@@ -16,6 +16,7 @@ const CommonForm = ({
   setFormData,
   onSubmit,
   buttonText,
+  isButtonDisable,
 }) => {
   const renderInputsByComponentType = (controlItem, index) => {
     let element = null;
@@ -107,8 +108,9 @@ const CommonForm = ({
         })}
       </div>
       <Button
+        disabled={isButtonDisable}
         type="submit"
-        className="mt-4 w-full bg-gray-900 rounded text-white hover:bg-gray-950"
+        className="mt-4 w-full"
       >
         {buttonText || "Submit"}
       </Button>
