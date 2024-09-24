@@ -16,11 +16,11 @@ module.exports = {
   			background: 'white',
   			foreground: 'hsl(var(--foreground))',
   			card: {
-  				DEFAULT: 'hsl(var(--card))',
+  				DEFAULT: 'white',
   				foreground: 'hsl(var(--card-foreground))'
   			},
   			popover: {
-  				DEFAULT: 'hsl(var(--popover))',
+  				DEFAULT: 'white',
   				foreground: 'hsl(var(--popover-foreground))'
   			},
   			primary: {
@@ -32,19 +32,19 @@ module.exports = {
   				foreground: 'hsl(var(--secondary-foreground))'
   			},
   			muted: {
-  				DEFAULT: 'hsl(var(--muted))',
-  				foreground: 'gray-400'
+  				DEFAULT: '#eeeeee',
+  				foreground: '#777777'
   			},
   			accent: {
-  				DEFAULT: 'hsl(var(--accent))',
+  				DEFAULT: '#efefef',
   				foreground: 'hsl(var(--accent-foreground))'
   			},
   			destructive: {
   				DEFAULT: 'hsl(var(--destructive))',
   				foreground: 'hsl(var(--destructive-foreground))'
   			},
-  			border: 'border-gray-300',
-  			input: 'border-gray-300',
+  			border: '#efefef',
+  			input: '#efefef',
   			ring: 'hsl(var(--ring))',
   			chart: {
   				'1': 'hsl(var(--chart-1))',
