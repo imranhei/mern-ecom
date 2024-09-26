@@ -32,7 +32,7 @@ const getFilteredProducts = async (req, res) => {
     }
 
     const products = await Product.find(filters).sort(sort);
-    console.log(filters);
+    
     res.status(200).json({ success: true, data: products });
   } catch (error) {
     res.status(500).json({ success: false, message: "Some error occured" });

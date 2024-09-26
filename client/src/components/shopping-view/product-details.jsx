@@ -10,13 +10,40 @@ import { Separator } from "../ui/separator";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { StarIcon } from "lucide-react";
 import { Input } from "../ui/input";
+import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
+import { useDispatch, useSelector } from "react-redux";
+import { useToast } from "@/hooks/use-toast";
+import { setProductDetails } from "@/store/shop/products-slice";
 
 const ProductDetailsDialog = ({ open, setOpen, productDetails }) => {
+  const { toast } = useToast();
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+  const handleAddToCart = (id) => {
+    dispatch(addToCart({ userId: user?.id, productId: id, quantity: 1 })).then(
+      (data) => {
+        console.log(data);
+        if (data.payload.success) {
+          dispatch(fetchCartItems(user?.id));
+          toast({
+            title: "Product added to cart",
+            status: "success",
+          });
+        }
+      }
+    );
+  };
+
+  const handleDialogClose = () => {
+    setOpen(false);
+    dispatch(setProductDetails(null));
+  }
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleDialogClose}>
       <DialogContent className="grid grid-cols-2 gap-8 sm:p-12 max-w-[90vw] sm:max-w[80vw] lg:max-w-[70vw]">
-        <DialogTitle className="hidden"></DialogTitle>
-        <DialogDescription className="hidden"></DialogDescription>
+        <DialogTitle className="hidden">hello</DialogTitle>
+        <DialogDescription className="hidden">des</DialogDescription>
         <div className="relative overflow-hidden rounded-lg">
           <img
             src={productDetails?.image}
@@ -58,7 +85,7 @@ const ProductDetailsDialog = ({ open, setOpen, productDetails }) => {
             <span className="text-muted-foreground">(4.5)</span>
           </div>
           <div className="my-5">
-            <Button className="w-full">Add tp Cart</Button>
+            <Button onClick={() => handleAddToCart(productDetails._id)} className="w-full">Add tp Cart</Button>
           </div>
           <Separator />
           <div className="max-h-[300px] overflow-auto">

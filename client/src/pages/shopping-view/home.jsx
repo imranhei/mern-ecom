@@ -8,4 +8,4 @@ const ShoppingHome = () => {
   )
 }
 
-export default ShoppingHome
+export default ShoppingHome;

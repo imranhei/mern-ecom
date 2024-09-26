@@ -18,6 +18,8 @@ import {
 import ShoppingProductTile from "@/components/shopping-view/product-tile";
 import { useSearchParams } from "react-router-dom";
 import ProductDetailsDialog from "@/components/shopping-view/product-details";
+import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
+import { useToast } from "@/hooks/use-toast";
 
 const createSearchParamHelper = (filterParams) => {
   const queryParams = [];
@@ -38,10 +40,12 @@ const Shoppinglisting = () => {
   const { productList, productDetails } = useSelector(
     (state) => state.shopProducts
   );
+  const { user } = useSelector((state) => state.auth);
   const [filters, setFilters] = useState({});
   const [sort, setSort] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const [open, setOpen] = useState(false);
+  const {toast} = useToast();
 
   const handleSort = (value) => {
     setSort(value);
@@ -71,6 +75,21 @@ const Shoppinglisting = () => {
 
   const handleGetProductDetails = (id) => {
     dispatch(fecthProductDetails(id));
+  };
+
+  const handleAddToCart = (id) => {
+    dispatch(addToCart({ userId: user?.id, productId: id, quantity: 1 })).then(
+      (data) => {
+        console.log(data);
+        if (data.payload.success) {
+          dispatch(fetchCartItems(user?.id));
+          toast({
+            title: "Product added to cart",
+            status: "success",
+          });
+        }
+      }
+    );
   };
 
   useEffect(() => {
@@ -139,12 +158,17 @@ const Shoppinglisting = () => {
                   key={product?._id}
                   product={product}
                   handleGetProductDetails={handleGetProductDetails}
+                  handleAddToCart={handleAddToCart}
                 />
               ))
             : null}
         </div>
       </div>
-      <ProductDetailsDialog open={open} setOpen={setOpen} productDetails={productDetails} />
+      <ProductDetailsDialog
+        open={open}
+        setOpen={setOpen}
+        productDetails={productDetails}
+      />
     </div>
   );
 };
