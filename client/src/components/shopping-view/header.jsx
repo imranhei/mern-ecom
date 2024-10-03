@@ -1,5 +1,10 @@
-import React, { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import { House, LogOut, Menu, ShoppingCart, User } from "lucide-react";
 import { Sheet, SheetTrigger, SheetContent } from "../ui/sheet";
 import { Button } from "../ui/button";
@@ -21,13 +26,23 @@ import { Label } from "../ui/label";
 
 const MenuItems = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const handleNavigate = (menuItem) => {
     console.log(menuItem);
     sessionStorage.removeItem("filters");
-    const currentFilter = menuItem.id !== "home" ? { category: [menuItem.id] } : null;
+    const currentFilter =
+      menuItem.id !== "home" &&
+      menuItem.id !== "products" &&
+      menuItem.id !== "search"
+        ? { category: [menuItem.id] }
+        : null;
     sessionStorage.setItem("filters", JSON.stringify(currentFilter));
-    navigate(menuItem.path);
+
+    location.pathname.includes("listing") && currentFilter !== null
+      ? setSearchParams(new URLSearchParams(`?category=${menuItem.id}`))
+      : navigate(menuItem.path);
   };
 
   return (
@@ -65,11 +80,22 @@ const HeaderRightContent = () => {
   return (
     <div className="flex lg:items-center lg:flex-row flex-col gap-4">
       <Sheet open={openCartSheet} onOpenChange={() => setOpenCartSheet(false)}>
-        <Button variant="outline" size="icon" onClick={() => setOpenCartSheet(true)}>
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={() => setOpenCartSheet(true)}
+        >
           <ShoppingCart className="w-6 h-6" />
           <span className="sr-only">User Cart</span>
         </Button>
-        <UserCartWrapper cartItems={cartItems && cartItems.items && cartItems.items.length > 0 ? cartItems.items : []} />
+        <UserCartWrapper
+          setOpenCartSheet={setOpenCartSheet}
+          cartItems={
+            cartItems && cartItems.items && cartItems.items.length > 0
+              ? cartItems.items
+              : []
+          }
+        />
       </Sheet>
 
       <DropdownMenu>

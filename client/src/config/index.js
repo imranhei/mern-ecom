@@ -121,6 +121,11 @@ export const shoppingViewHeaderMenuItems = [
     path: "/shop/home",
   },
   {
+    id: "products",
+    label: "Products",
+    path: "/shop/listing",
+  },
+  {
     id: "men",
     label: "Men",
     path: "/shop/listing",
@@ -144,6 +149,10 @@ export const shoppingViewHeaderMenuItems = [
     id: 'accessories',
     label: "Accessories",
     path: "/shop/listing",
+  },{
+    id: 'search',
+    label: "Search",
+    path: "/shop/search",
   },
 ]
 
@@ -188,3 +197,40 @@ export const sortOptions = [
   { id: "title-atoz", label: "Title A to Z" },
   { id: "title-ztoa", label: "Title Z to A" },
 ]
+
+export const addressFormControls = [
+  {
+    label: "Address",
+    name: "address",
+    componentType: "input",
+    type: "text",
+    placeholder: "Enter your address",
+  },
+  {
+    label: "City",
+    name: "city",
+    componentType: "input",
+    type: "text",
+    placeholder: "Enter your city",
+  },
+  {
+    label: "Pincode",
+    name: "pincode",
+    componentType: "input",
+    type: "text",
+    placeholder: "Enter your pincode",
+  },
+  {
+    label: "Phone",
+    name: "phone",
+    componentType: "input",
+    type: "text",
+    placeholder: "Enter your phone number",
+  },
+  {
+    label: "Notes",
+    name: "notes",
+    componentType: "textarea",
+    placeholder: "Enter any additional notes",
+  },
+];

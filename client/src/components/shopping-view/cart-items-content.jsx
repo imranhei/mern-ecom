@@ -8,6 +8,8 @@ import { useToast } from "@/hooks/use-toast";
 
 const UserCartItemsContent = ({ cartItem }) => {
   const { user } = useSelector((state) => state.auth);
+  const { cartItems } = useSelector((state) => state.shopCart);
+  const { productList } = useSelector((state) => state.shopProducts);
   const dispatch = useDispatch();
   const { toast } = useToast();
 
@@ -25,6 +27,32 @@ const UserCartItemsContent = ({ cartItem }) => {
   };
 
   const handleUpdateQuantity = (cartItem, type) => {
+    if (type === "plus") {
+      let getCartItems = cartItems?.items || [];
+
+      if (getCartItems.length) {
+        const indexOfCurrentItem = getCartItems.findIndex(
+          (item) => item.productId === cartItem?.productId
+        );
+
+        const getCurrentProductIndex = productList.findIndex(
+          (product) => product._id === cartItem?.productId
+        );
+        const getTotalStock = productList[getCurrentProductIndex].stock;
+
+        if (indexOfCurrentItem > -1) {
+          const getQuantity = getCartItems[indexOfCurrentItem].quantity;
+          if (getQuantity + 1 > getTotalStock) {
+            toast({
+              title: `Only ${getQuantity} quantity can be added for this item`,
+              variant: "destructive",
+            });
+            return;
+          }
+        }
+      }
+    }
+
     dispatch(
       updateCartQty({
         userId: user?.id,

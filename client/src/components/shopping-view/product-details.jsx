@@ -17,9 +17,29 @@ import { setProductDetails } from "@/store/shop/products-slice";
 
 const ProductDetailsDialog = ({ open, setOpen, productDetails }) => {
   const { toast } = useToast();
+  const { cartItems } = useSelector((state) => state.shopCart);
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  const handleAddToCart = (id) => {
+
+  const handleAddToCart = (id, getTotalStock) => {
+    let getCartItems = cartItems?.items || [];
+
+    if (getCartItems.length) {
+      const indexOfCurrentItem = getCartItems.findIndex(
+        (item) => item.productId === id
+      );
+      if (indexOfCurrentItem > -1) {
+        const getQuantity = getCartItems[indexOfCurrentItem].quantity;
+        if (getQuantity + 1 > getTotalStock) {
+          toast({
+            title: `Only ${getQuantity} quantity can be added for this item`,
+            variant: "destructive",
+          });
+          return;
+        }
+      }
+    }
+
     dispatch(addToCart({ userId: user?.id, productId: id, quantity: 1 })).then(
       (data) => {
         console.log(data);
@@ -37,7 +57,7 @@ const ProductDetailsDialog = ({ open, setOpen, productDetails }) => {
   const handleDialogClose = () => {
     setOpen(false);
     dispatch(setProductDetails(null));
-  }
+  };
 
   return (
     <Dialog open={open} onOpenChange={handleDialogClose}>
@@ -85,7 +105,20 @@ const ProductDetailsDialog = ({ open, setOpen, productDetails }) => {
             <span className="text-muted-foreground">(4.5)</span>
           </div>
           <div className="my-5">
-            <Button onClick={() => handleAddToCart(productDetails._id)} className="w-full">Add tp Cart</Button>
+            {productDetails?.stock === 0 ? (
+              <Button className="w-full opacity-60 cursor-not-allowed">
+                out of Stock
+              </Button>
+            ) : (
+              <Button
+                onClick={() =>
+                  handleAddToCart(productDetails._id, productDetails?.stock)
+                }
+                className="w-full"
+              >
+                Add tp Cart
+              </Button>
+            )}
           </div>
           <Separator />
           <div className="max-h-[300px] overflow-auto">
