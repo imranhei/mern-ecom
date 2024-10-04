@@ -28,7 +28,8 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(checkAuth());
+    const token = JSON.parse(sessionStorage.getItem("token")); //if i don't have any subdomain
+    dispatch(checkAuth(token));
   }, [dispatch]);
 
   if (isLoading) {

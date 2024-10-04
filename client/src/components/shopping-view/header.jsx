@@ -19,7 +19,7 @@ import {
 } from "../ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { useDispatch, useSelector } from "react-redux";
-import { logoutUser } from "@/store/auth-slice";
+import { logoutUser, resetTokenAndCredentials } from "@/store/auth-slice";
 import UserCartWrapper from "./cart-wrapper";
 import { fetchCartItems } from "@/store/shop/cart-slice";
 import { Label } from "../ui/label";
@@ -69,7 +69,9 @@ const HeaderRightContent = () => {
   const dispatch = useDispatch();
 
   const handleLogout = () => {
-    dispatch(logoutUser());
+    // dispatch(logoutUser()); //if i have any subdomain
+    dispatch(resetTokenAndCredentials()); //if i don't have any subdomain
+    navigate("/auth/login");
   };
 
   useEffect(() => {

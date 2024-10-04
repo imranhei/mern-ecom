@@ -65,9 +65,23 @@ const loginUser = async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    res.cookie("token", token, { httpOnly: true, secure: true }).json({
+    // if i have any subdomain
+    // res.cookie("token", token, { httpOnly: true, secure: true }).json({
+    //   success: true,
+    //   message: "Login successfull",
+    //   user: {
+    //     id: checkUser._id,
+    //     userName: checkUser.userName,
+    //     email: checkUser.email,
+    //     role: checkUser.role,
+    //   },
+    // });
+
+    // if i don't have any subdomain
+    res.status(200).json({
       success: true,
       message: "Login successfull",
+      token,
       user: {
         id: checkUser._id,
         userName: checkUser.userName,
@@ -93,9 +107,33 @@ const logoutUser = async (req, res) => {
 };
 
 //auth middleware
+// if i have any subdomain
+// const authMiddleware = async (req, res, next) => {
+//   const token = req.cookies.token;
+//   if (!token) {
+//     return res.status(401).json({
+//       success: false,
+//       message: "Unauthorized access",
+//     });
+//   }
+
+//   try {
+//     const decoded = jwt.verify(token, "CLIENT_SECRET_KEY");
+//     req.user = decoded;
+//     next();
+//   } catch (error) {
+//     res.status(401).json({
+//       success: false,
+//       message: "Unauthorized user",
+//     });
+//   }
+// };
+
+// if i don't have any subdomain
 const authMiddleware = async (req, res, next) => {
-  const token = req.cookies.token;
-  // console.log('toke', req);
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
   if (!token) {
     return res.status(401).json({
       success: false,
@@ -112,6 +150,7 @@ const authMiddleware = async (req, res, next) => {
       success: false,
       message: "Unauthorized user",
     });
+  } finally {
   }
 };
 
