@@ -32,16 +32,16 @@ const UserCartItemsContent = ({ cartItem }) => {
 
       if (getCartItems.length) {
         const indexOfCurrentItem = getCartItems.findIndex(
-          (item) => item.productId === cartItem?.productId
+          (item) => item?.productId === cartItem?.productId
         );
 
         const getCurrentProductIndex = productList.findIndex(
-          (product) => product._id === cartItem?.productId
+          (product) => product?._id === cartItem?.productId
         );
-        const getTotalStock = productList[getCurrentProductIndex].stock;
+        const getTotalStock = productList[getCurrentProductIndex]?.stock;
 
         if (indexOfCurrentItem > -1) {
-          const getQuantity = getCartItems[indexOfCurrentItem].quantity;
+          const getQuantity = getCartItems[indexOfCurrentItem]?.quantity;
           if (getQuantity + 1 > getTotalStock) {
             toast({
               title: `Only ${getQuantity} quantity can be added for this item`,
