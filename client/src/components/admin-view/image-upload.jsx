@@ -13,7 +13,8 @@ const ProductImageUpload = ({
   setUploadedImageUrl,
   setImageLoadingState,
   imageLoadingState,
-  isEditMode
+  isEditMode,
+  isCustomStyling = true,
 }) => {
   const inputRef = useRef(null);
 
@@ -42,7 +43,7 @@ const ProductImageUpload = ({
     const data = new FormData();
     data.append("my_file", imageFile);
     const response = await axios.post(
-      "http://localhost:3000/api/admin/products/upload-image",
+      `${import.meta.env.VITE_API_URL}/api/admin/products/upload-image`,
       data
     );
 
@@ -59,7 +60,7 @@ const ProductImageUpload = ({
   }, [imageFile]);
 
   return (
-    <div className="w-full max-w-md mx-auto mt-4">
+    <div className={`w-full mt-4 ${isCustomStyling ? "" : "max-w-md mx-auto"}`}>
       <Label className="text-lg font-semibold mb-2 block">Upload Image</Label>
       <div
         onDragOver={handleDragOver}
@@ -77,7 +78,9 @@ const ProductImageUpload = ({
         {!imageFile ? (
           <Label
             htmlFor="image-upload"
-            className={`${isEditMode ? 'cursor-not-allowed' : 'cursor-pointer'} flex flex-col items-center justify-center h-32`}
+            className={`${
+              isEditMode ? "cursor-not-allowed" : "cursor-pointer"
+            } flex flex-col items-center justify-center h-32`}
           >
             <UploadCloudIcon className="w-10 h-10 text-muted-forground mb-2" />
             <span>Drag & drop or click to upload image</span>

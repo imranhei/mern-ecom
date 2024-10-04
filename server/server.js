@@ -10,6 +10,7 @@ const shopCartRouter = require("./routes/shop/cart-routes");
 const shopAddressRouter = require("./routes/shop/address-routes");
 const shopSearchRouter = require("./routes/shop/search-routes");
 const shopReviewRouter = require("./routes/shop/review-routes");
+const commonFeaturesRouter = require("./routes/common/feature-routes");
 
 dotenv.config();
 
@@ -45,6 +46,7 @@ app.use("/api/shop/cart", shopCartRouter);
 app.use("/api/shop/address", shopAddressRouter);
 app.use("/api/shop/search", shopSearchRouter);
 app.use("/api/shop/review", shopReviewRouter);
+app.use("/api/common/feature", commonFeaturesRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

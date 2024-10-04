@@ -30,7 +30,6 @@ const MenuItems = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const handleNavigate = (menuItem) => {
-    console.log(menuItem);
     sessionStorage.removeItem("filters");
     const currentFilter =
       menuItem.id !== "home" &&
@@ -84,8 +83,10 @@ const HeaderRightContent = () => {
           variant="outline"
           size="icon"
           onClick={() => setOpenCartSheet(true)}
+          className="relative"
         >
           <ShoppingCart className="w-6 h-6" />
+          <span className="absolute -top-2 right-px text-sm font-bold">{cartItems?.items?.length || 0}</span>
           <span className="sr-only">User Cart</span>
         </Button>
         <UserCartWrapper

@@ -29,6 +29,8 @@ import { useNavigate } from "react-router-dom";
 import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
 import { useToast } from "@/hooks/use-toast";
 import ProductDetailsDialog from "@/components/shopping-view/product-details";
+import { getFeatureImages } from "@/store/common-slice";
+
 
 const categoriesWithIcon = [
   { id: "men", label: "Men", icon: ShirtIcon },
@@ -51,6 +53,7 @@ const ShoppingHome = () => {
   const slides = [bannerOne, bannerTwo, bannerThree];
   const [currentSlide, setCurrentSlide] = useState(0);
   const { productList, productDetails } = useSelector((state) => state.shopProducts);
+  const { featureImageList } = useSelector((state) => state.commonFeature);
   const [open, setOpen] = useState(false);
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -88,11 +91,12 @@ const ShoppingHome = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
+      // need to modify
       setCurrentSlide((prev) => (prev + 1) % slides.length);
     }, 5000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, []); // dipendency as featureImageList
 
   useEffect(() => {
     dispatch(
@@ -109,10 +113,14 @@ const ShoppingHome = () => {
     }
   }, [productDetails]);
 
+  useEffect(() => {
+    dispatch(getFeatureImages());
+  }, [dispatch]);
+
   return (
     <div className="flex flex-col min-h-screen">
       <div className="relative w-full h-[600px] overflow-hidden">
-        {slides.map((slide, index) => (
+        {slides.map((slide, index) => ( //featureImageList && featureImageList.length > 0 ? item.image ***line: 94
           <img
             key={index}
             src={slide}

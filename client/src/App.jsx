@@ -47,11 +47,16 @@ function App() {
 
   return (
     <div className="flex flex-col overflow-hidden bg-white">
-      {/* common component */}
-
-      {/* <h1>Header Component {location.pathname}</h1> */}
-
       <Routes>
+        <Route
+          path="/"
+          element={
+            <CheckAuth
+              isAuthenticated={isAuthenticated}
+              user={user}
+            ></CheckAuth>
+          }
+        />
         <Route
           path="/auth"
           element={

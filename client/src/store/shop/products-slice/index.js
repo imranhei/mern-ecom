@@ -16,7 +16,7 @@ export const fecthAllFilteredProducts = createAsyncThunk(
     });
 
     const result = await axios.get(
-      `http://localhost:3000/api/shop/products/get?${query}`
+      `${import.meta.env.VITE_API_URL}/api/shop/products/get?${query}`
     );
     return result?.data;
   }
@@ -26,7 +26,7 @@ export const fecthProductDetails = createAsyncThunk(
   "products/fetchProductDetails",
   async (id) => {
     const result = await axios.get(
-      `http://localhost:3000/api/shop/products/get/${id}`
+      `${import.meta.env.VITE_API_URL}/api/shop/products/get/${id}`
     );
     return result?.data;
   }
@@ -38,7 +38,7 @@ const shoppingProductSlice = createSlice({
   reducers: {
     setProductDetails: (state) => {
       state.productDetails = null;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -52,7 +52,8 @@ const shoppingProductSlice = createSlice({
       .addCase(fecthAllFilteredProducts.rejected, (state, action) => {
         state.loading = false;
         state.productList = [];
-      }).addCase(fecthProductDetails.pending, (state) => {
+      })
+      .addCase(fecthProductDetails.pending, (state) => {
         state.loading = true;
       })
       .addCase(fecthProductDetails.fulfilled, (state, action) => {
